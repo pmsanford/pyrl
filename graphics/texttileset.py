@@ -2,8 +2,8 @@ import json
 import sys
 
 class TextTileset:
-    def __init__(self):
-        tfile = open('text_tiles.json')
+    def __init__(self, filename):
+        tfile = open(filename)
         tile_file = json.loads(tfile.read())
         tfile.close()
         self.tileset_name = tile_file['name']

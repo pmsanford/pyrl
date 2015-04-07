@@ -1,8 +1,10 @@
 import tdl
-from map import Map
+from environment.map import Map
 from rendering.tdlrenderer import TdlRenderer
 from graphics.texttileset import TextTileset
 from rendering.textmaprenderer import TextMapRenderer
+from rendering.characterrenderer import CharacterRenderer
+from engine.player import Player
 
 WIDTH, HEIGHT = 80, 24
 
@@ -24,20 +26,24 @@ MOVEMENT_KEYS = {
 
 console = TdlRenderer(WIDTH, HEIGHT, 'sandbox')
 
-playerX, playerY = 1, 2
-
 cur_map = Map()
 
-tileset = TextTileset()
+map_tileset = TextTileset('text_tiles.json')
+char_tileset = TextTileset('char_tiles.json')
 
-map_renderer = TextMapRenderer(console, tileset)
+map_renderer = TextMapRenderer(console, map_tileset)
+char_renderer = CharacterRenderer(console, char_tileset)
+
+player = Player(1, 1, 'player')
 
 while True:
     console.clear()
 
     map_renderer.render_map(cur_map)
+    
+    char_renderer.render_character(player)
 
-    console.draw_str_at(playerX, playerY, '@')
+    playerX, playerY = player.get_location()
 
     visible = tdl.map.quickFOV(playerX, playerY, cur_map.is_passable, radius=20)
 
@@ -50,13 +56,12 @@ while True:
         if event.type == 'KEYDOWN':
             if event.keychar.upper() in MOVEMENT_KEYS:
                 keyX, keyY = MOVEMENT_KEYS[event.keychar.upper()]
-                
+
                 newX = playerX + keyX
                 newY = playerY + keyY
 
                 if cur_map.is_passable(newX, newY):
-                    playerX = newX
-                    playerY = newY
+                    player.set_location(newX, newY)
             
             if event.keychar.upper() == 'Q':
                 raise SystemExit('Bye felicia')
