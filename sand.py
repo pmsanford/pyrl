@@ -1,6 +1,8 @@
 import tdl
 from map import Map
 from rendering.tdlrenderer import TdlRenderer
+from graphics.texttileset import TextTileset
+from rendering.textmaprenderer import TextMapRenderer
 
 WIDTH, HEIGHT = 80, 24
 
@@ -24,12 +26,16 @@ console = TdlRenderer(WIDTH, HEIGHT, 'sandbox')
 
 playerX, playerY = 1, 2
 
+cur_map = Map()
+
+tileset = TextTileset()
+
+map_renderer = TextMapRenderer(console, tileset)
+
 while True:
     console.clear()
 
-    cur_map = Map()
-
-    cur_map.draw(console)
+    map_renderer.render_map(cur_map)
 
     console.draw_str_at(playerX, playerY, '@')
 
