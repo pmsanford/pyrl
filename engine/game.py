@@ -5,6 +5,7 @@ from graphics.texttileset import TextTileset
 from rendering.textmaprenderer import TextMapRenderer
 from rendering.characterrenderer import CharacterRenderer
 from engine.player import Player
+from input.tdlinput import TdlInput
 
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
@@ -13,7 +14,8 @@ class Game:
                  char_tileset = TextTileset(config.get_game_data('char_tiles.json')),
                  map_renderer = None,
                  char_renderer = None,
-                 player = Player(1, 1, 'player')):
+                 player = Player(1, 1, 'player'),
+                 input_processor = TdlInput()):
         self.console = console
         self.cur_map = first_map
         self.map_tileset = map_tileset
@@ -21,23 +23,23 @@ class Game:
         self.map_renderer = map_renderer if map_renderer is not None else TextMapRenderer(console, map_tileset)
         self.char_renderer = char_renderer if char_renderer is not None else CharacterRenderer(console, char_tileset)
         self.player = player
+        self.input_processor = input_processor
+        self.input_processor.add_event_handler(self.handle_quit, ['quit', 'key'])
+
+    def handle_quit(self, event):
+        if event.type == 'QUIT':
+            raise SystemExit("User closed window")
+        if event.type == 'KEYDOWN' and event.keychar.upper() == 'Q':
+            raise SystemExit("User quit")
 
     def render_all(self):
-        self.console.clear()
+        self.console.pre_render()
         self.map_renderer.render_map(self.cur_map)
         self.char_renderer.render_character(self.player)
-        self.console.flush()
+        self.console.post_render()
 
-    # TODO
     def handle_events(self):
-        import tdl # TODO: Remove after refactoring handle_events
-        for event in tdl.event.get():
-            if event.type == 'KEYDOWN':
-                if event.keychar.upper() == 'Q':
-                    raise SystemExit("User quit")
-
-            if event.type == 'QUIT':
-                raise SystemExit("User closed window")
+        self.input_processor.poll_events()
 
     def loop(self):
         while True:

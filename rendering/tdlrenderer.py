@@ -8,10 +8,10 @@ class TdlRenderer:
                     fgcolor = (255, 255, 255), bgcolor = (0, 0, 0)):
         self.console.drawStr(x, y, string, fgcolor = fgcolor, bgcolor = bgcolor)
 
-    def clear(self):
+    def pre_render(self):
         self.console.clear()
 
-    def flush(self):
+    def post_render(self):
         self.tdl.flush()
 
     def get_size(self):
