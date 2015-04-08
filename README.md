@@ -1,9 +1,7 @@
 # pyrl
 Python Roguelike-in-progress. Currently based on TDL, but with an eye to supporting modular engines.
 
-# Prep
-
-# Retrieval
+# Running
 First, run
 ```
 git clone https://github.com/pmsanford/pyrl.git
