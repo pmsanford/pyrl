@@ -2,5 +2,9 @@
 	"K": "up",
 	"J": "down",
 	"H": "left",
-	"L": "right"
+	"L": "right",
+	"Y": "ul",
+	"U": "ur",
+	"B": "dl",
+	"N": "dr"
 }

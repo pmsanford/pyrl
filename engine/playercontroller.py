@@ -16,3 +16,11 @@ class PlayerController:
                 self.player.set_location(x - 1, y)
             if command == 'right':
                 self.player.set_location(x + 1, y)
+            if command == 'ul':
+                self.player.set_location(x - 1, y - 1)
+            if command == 'ur':
+                self.player.set_location(x + 1, y - 1)
+            if command == 'dl':
+                self.player.set_location(x - 1, y + 1)
+            if command == 'dr':
+                self.player.set_location(x + 1, y + 1)
