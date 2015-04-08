@@ -9,8 +9,8 @@ from engine.player import Player
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
                  first_map = Map(),
-                 map_tileset = TextTileset('text_tiles.json'),
-                 char_tileset = TextTileset('char_tiles.json'),
+                 map_tileset = TextTileset(config.get_game_data('text_tiles.json')),
+                 char_tileset = TextTileset(config.get_game_data('char_tiles.json')),
                  map_renderer = None,
                  char_renderer = None,
                  player = Player(1, 1, 'player')):
