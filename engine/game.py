@@ -28,16 +28,18 @@ class Game:
         self.char_renderer = char_renderer if char_renderer is not None else CharacterRenderer(console, char_tileset)
         self.player = player
         self.input_processor = input_processor
-        self.input_processor.add_event_handler(self.handle_quit, ['quit', 'key'])
+        self.input_processor.add_event_handler(self.handle_quit, ['quit'])
         self.keybindings = keybindings
         self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings)
-        self.input_processor.add_event_handler(self.player_controller.handle_keypress, ['key'])
+        self.input_processor.add_event_handler(self.handle_keypress, ['key'])
+
+    def handle_keypress(self, event):
+        if event.keychar.upper() == 'Q':
+            raise SystemExit("User pressed q")
+        self.player_controller.handle_keypress(event)
 
     def handle_quit(self, event):
-        if event.type == 'QUIT':
-            raise SystemExit("User closed window")
-        if event.type == 'KEYDOWN' and event.keychar.upper() == 'Q':
-            raise SystemExit("User quit")
+        raise SystemExit("User closed window")
 
     def render_all(self):
         self.console.pre_render()
