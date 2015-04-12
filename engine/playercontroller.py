@@ -1,9 +1,10 @@
 class PlayerController:
     movement_keys = ['up', 'down', 'left', 'right', 'ul', 'ur', 'dl', 'dr']
-    def __init__(self, player, keybindings, game):
+    def __init__(self, player, keybindings, game, environment):
         self.player = player
         self.keybindings = keybindings
         self.game = game
+        self.env = environment
 
     def handle_keypress(self, event):
         command = self.keybindings.get_binding(event.keychar)
@@ -19,20 +20,29 @@ class PlayerController:
 
     def handle_movement(self, command):
         x, y = self.player.get_location()
+        new_x = x
+        new_y = y
 
         if command == 'up':
-            self.player.set_location(x, y - 1)
+            new_y -= 1
         if command == 'down':
-            self.player.set_location(x, y + 1)
+            new_y += 1
         if command == 'left':
-            self.player.set_location(x - 1, y)
+            new_x -= 1
         if command == 'right':
-            self.player.set_location(x + 1, y)
+            new_x += 1
         if command == 'ul':
-            self.player.set_location(x - 1, y - 1)
+            new_y -= 1
+            new_x -= 1
         if command == 'ur':
-            self.player.set_location(x + 1, y - 1)
+            new_y -= 1
+            new_x += 1
         if command == 'dl':
-            self.player.set_location(x - 1, y + 1)
+            new_y += 1
+            new_x -= 1
         if command == 'dr':
-            self.player.set_location(x + 1, y + 1)
+            new_y += 1
+            new_x += 1
+
+        if self.env.validate_move(new_x, new_y):
+            self.player.set_location(new_x, new_y)

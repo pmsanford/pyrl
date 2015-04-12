@@ -8,6 +8,7 @@ from engine.player import Player
 from input.tdlinput import TdlInput
 from input.keybindings import Keybindings
 from engine.playercontroller import PlayerController
+from environment.environmentcontroller import EnvironmentController
 
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
@@ -19,7 +20,8 @@ class Game:
                  player = Player(1, 1, 'player'),
                  input_processor = TdlInput(),
                  keybindings = Keybindings(config.get_game_data('keybindings.json')),
-                 player_controller = None):
+                 player_controller = None,
+                 environment = None):
         self.console = console
         self.cur_map = first_map
         self.map_tileset = map_tileset
@@ -30,7 +32,8 @@ class Game:
         self.input_processor = input_processor
         self.input_processor.add_event_handler(self.handle_quit, ['quit'])
         self.keybindings = keybindings
-        self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings, self)
+        self.environment = environment if environment is not None else EnvironmentController(self.cur_map)
+        self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings, self, self.environment)
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'
 

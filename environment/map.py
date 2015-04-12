@@ -56,6 +56,12 @@ class Map:
                 x += length
         return runs
 
+    def get_attrs(self, x, y):
+        if self.map_lines[y][x] in ['#', '-']:
+            return {'passable': False}
+        else:
+            return {'passable': True}
+
 class Run:
     def __init__(self, char, count, tile, x, y):
         self.char = char
