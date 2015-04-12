@@ -30,13 +30,27 @@ class Game:
         self.input_processor = input_processor
         self.input_processor.add_event_handler(self.handle_quit, ['quit'])
         self.keybindings = keybindings
-        self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings)
+        self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings, self)
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
+        self.state = 'movement'
 
     def handle_keypress(self, event):
         if event.keychar.upper() == 'Q':
             raise SystemExit("User pressed q")
-        self.player_controller.handle_keypress(event)
+        if self.state == 'movement':
+            self.player_controller.handle_keypress(event)
+        elif self.state == 'attack':
+            self.finish_attack(event.keychar)
+
+    def finish_attack(self, keypress):
+        self.player_controller.resolve_attack(None)
+        self.console.clear_prompt()
+        self.state = 'movement'
+
+    def get_target(self):
+        self.state = 'attack'
+        self.console.show_prompt("Which direction?")
+        self.console.post_render()
 
     def handle_quit(self, event):
         raise SystemExit("User closed window")
