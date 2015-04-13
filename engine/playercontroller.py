@@ -16,7 +16,7 @@ class PlayerController:
     
     def resolve_attack(self, monster):
         if monster is not None:
-            monster.hp -= 10
+            monster.take_damage(10)
 
     def handle_movement(self, command):
         x, y = self.player.get_location()

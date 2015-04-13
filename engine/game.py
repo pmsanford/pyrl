@@ -9,6 +9,7 @@ from input.tdlinput import TdlInput
 from input.keybindings import Keybindings
 from engine.playercontroller import PlayerController
 from environment.environmentcontroller import EnvironmentController
+from rendering.monsterrenderer import MonsterRenderer
 
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
@@ -32,10 +33,11 @@ class Game:
         self.input_processor = input_processor
         self.input_processor.add_event_handler(self.handle_quit, ['quit'])
         self.keybindings = keybindings
-        self.environment = environment if environment is not None else EnvironmentController(self.cur_map)
+        self.environment = environment if environment is not None else EnvironmentController(self.cur_map, self)
         self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings, self, self.environment)
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'
+        self.environment.add_monster()
 
     def handle_keypress(self, event):
         if event.keychar.upper() == 'Q':
@@ -62,7 +64,12 @@ class Game:
         self.console.pre_render()
         self.map_renderer.render_map(self.cur_map)
         self.char_renderer.render_character(self.player)
+        self.environment.render_monsters(
+                MonsterRenderer(self.console, self.char_tileset))
         self.console.post_render()
+
+    def update_all(self):
+        self.environment.update()
 
     def handle_events(self):
         self.input_processor.poll_events()

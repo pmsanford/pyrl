@@ -5,7 +5,11 @@
 				"code": "player",
 				"char": "@",
 				"color": [255,   0,   0]
+			},
+		"kobold": {
+				"code": "kobold",
+				"char": "k",
+				"color": [255, 102,   0]
 			}
 		}
-		
 }
