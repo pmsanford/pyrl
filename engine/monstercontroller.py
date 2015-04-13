@@ -1,8 +1,8 @@
 class MonsterController:
-    def __init__(self, monster, game):
+    def __init__(self, monster, environment):
         self.monster = monster
-        self.game = game
+        self.env = environment
 
     def update(self):
         if self.monster.get_hp() <= 0:
-            self.game.remove(self)
+            self.env.remove_monster(self)

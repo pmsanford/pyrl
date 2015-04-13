@@ -16,7 +16,7 @@ class EnvironmentController:
         return True
 
     def add_monster(self, monster = Monster(5, 5, 'kobold')):
-        self.monsters.append(MonsterController(monster, self.game))
+        self.monsters.append(MonsterController(monster, self))
 
     def update(self):
         for mc in self.monsters:
@@ -25,3 +25,9 @@ class EnvironmentController:
     def render_monsters(self, renderer):
         for mc in self.monsters:
             renderer.render_monster(mc.monster)
+
+    def entity_at(self, x, y):
+        return next((m.monster for m in self.monsters if m.monster.get_location() == (x, y)), None)
+
+    def remove_monster(self, monster):
+        self.monsters.remove(monster)

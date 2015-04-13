@@ -47,8 +47,39 @@ class Game:
         elif self.state == 'attack':
             self.finish_attack(event.keychar)
 
+    def get_loc_from_dir(self, cmd):
+        x, y = self.player.get_location()
+        new_x = x
+        new_y = y
+
+        if cmd == 'up':
+            new_y -= 1
+        if cmd == 'down':
+            new_y += 1
+        if cmd == 'left':
+            new_x -= 1
+        if cmd == 'right':
+            new_x += 1
+        if cmd == 'ul':
+            new_y -= 1
+            new_x -= 1
+        if cmd == 'ur':
+            new_y -= 1
+            new_x += 1
+        if cmd == 'dl':
+            new_y += 1
+            new_x -= 1
+        if cmd == 'dr':
+            new_y += 1
+            new_x += 1
+
+        return (new_x, new_y)
+
     def finish_attack(self, keypress):
-        self.player_controller.resolve_attack(None)
+        cmd = self.keybindings.get_binding(keypress)
+        x, y = self.get_loc_from_dir(cmd)
+        monst = self.environment.entity_at(x, y)
+        self.player_controller.resolve_attack(monst)
         self.console.clear_prompt()
         self.state = 'movement'
 
@@ -77,4 +108,5 @@ class Game:
     def loop(self):
         while True:
             self.render_all()
+            self.update_all()
             self.handle_events()
