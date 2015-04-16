@@ -1,5 +1,5 @@
-from engine.monster import Monster
-from engine.monstercontroller import MonsterController
+from environment.npcs.monster import Monster
+from environment.npcs.monstercontroller import MonsterController
 
 class EnvironmentController:
     def __init__(self, map_info, game):
