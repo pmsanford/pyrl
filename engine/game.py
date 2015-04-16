@@ -34,7 +34,7 @@ class Game:
         self.input_processor = input_processor
         self.input_processor.add_event_handler(self.handle_quit, ['quit'])
         self.keybindings = keybindings
-        self.environment = environment if environment is not None else EnvironmentController(self.cur_map)
+        self.environment = environment if environment is not None else EnvironmentController(self.cur_map, self.player)
         self.player_controller = player_controller if player_controller is not None else PlayerController(player, keybindings, self, self.environment)
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'

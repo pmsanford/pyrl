@@ -2,15 +2,18 @@ from environment.npcs.monster import Monster
 from environment.npcs.monstercontroller import MonsterController
 
 class EnvironmentController:
-    def __init__(self, map_info):
+    def __init__(self, map_info, player):
         self.map = map_info
         self.monsters = []
+        self.player = player
 
     def validate_move(self, x, y):
         spaceinfo = self.map.get_attrs(x, y)
         if 'passable' in spaceinfo and spaceinfo['passable'] == False:
             return False
         if any(m.monster.get_location() == (x, y) for m in self.monsters):
+            return False
+        if self.player.get_location() == (x, y):
             return False
         return True
 
