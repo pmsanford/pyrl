@@ -104,11 +104,13 @@ class Game:
     def update_all(self):
         self.environment.update()
 
+    def turn_completed(self):
+        self.update_all()
+
     def handle_events(self):
         self.input_processor.poll_events()
 
     def loop(self):
         while True:
             self.render_all()
-            self.update_all()
             self.handle_events()

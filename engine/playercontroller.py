@@ -11,12 +11,14 @@ class PlayerController:
         if command is not None:
             if command in self.movement_keys:
                 self.handle_movement(command)
+                self.game.turn_completed()
             if command == 'attack':
                 self.game.get_target()
     
     def resolve_attack(self, monster):
         if monster is not None:
             monster.take_damage(34)
+        self.game.turn_completed()
 
     def handle_movement(self, command):
         x, y = self.player.get_location()
