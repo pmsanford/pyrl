@@ -14,7 +14,7 @@ class TdlRenderer:
 
     def post_render(self):
         if self.prompt is not None:
-            self.show_prompt(self.prompt)
+            self.console.blit(self.prompt, 0, self.console.height - 4)
         self.tdl.flush()
 
     def get_size(self):
@@ -24,13 +24,13 @@ class TdlRenderer:
         self.console.drawChar(x, y, None, fgcolor = fg, bgcolor = bg)
 
     def show_prompt(self, text):
-        new_win = self.tdl.Window(self.console, 0, self.console.height - 4, self.console.width, 4)
+        new_win = self.tdl.Console(self.console.width, 4)
         new_win.clear()
-        new_win.drawFrame(0, 0, self.console.width, 4, '-')
+        new_win.drawFrame(0, 0, None, None, '-')
         new_win.drawStr(1, 1, text)
         new_win.move(1, 2)
         self.console.blit(new_win, 0, self.console.height - 4)
-        self.prompt = text
+        self.prompt = new_win
 
     def clear_prompt(self):
         self.prompt = None
