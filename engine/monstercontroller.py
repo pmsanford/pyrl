@@ -3,6 +3,6 @@ class MonsterController:
         self.monster = monster
         self.env = environment
 
-    def update(self):
+    def update(self, environment):
         if self.monster.get_hp() <= 0:
             self.env.remove_monster(self)

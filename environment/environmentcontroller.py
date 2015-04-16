@@ -20,7 +20,7 @@ class EnvironmentController:
 
     def update(self):
         for mc in self.monsters:
-            mc.update()
+            mc.update(self)
 
     def render_monsters(self, renderer):
         for mc in self.monsters:
