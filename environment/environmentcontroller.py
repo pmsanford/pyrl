@@ -2,10 +2,9 @@ from environment.npcs.monster import Monster
 from environment.npcs.monstercontroller import MonsterController
 
 class EnvironmentController:
-    def __init__(self, map_info, game):
+    def __init__(self, map_info):
         self.map = map_info
         self.monsters = []
-        self.game = game
 
     def validate_move(self, x, y):
         spaceinfo = self.map.get_attrs(x, y)
@@ -16,7 +15,9 @@ class EnvironmentController:
         return True
 
     def add_monster(self, monster = Monster(5, 5, 'kobold')):
-        self.monsters.append(MonsterController(monster, self))
+        mc = MonsterController(monster, self)
+        self.monsters.append(mc)
+        return mc
 
     def update(self):
         for mc in self.monsters:
