@@ -1,6 +1,9 @@
 # pyrl
 Python Roguelike-in-progress. Currently based on TDL, but with an eye to supporting modular engines.
 
+# Default Keybindings
+Vi keys or arrow keys for movement. `a` will prompt you for a direction to attack in, or you can move into a monster. `q` quits. See the [keybindings.json](gamedata/keybindings.json) file for more.
+
 # Running
 First, run
 ```
