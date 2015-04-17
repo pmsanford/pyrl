@@ -10,15 +10,20 @@ class PlayerController:
         command = self.keybindings.get_binding(event.keychar)
         if command is not None:
             if command in self.movement_keys:
-                self.handle_movement(command)
-                self.game.turn_completed()
+                new_x, new_y = self.handle_movement(command)
+
+                if self.env.validate_move(new_x, new_y):
+                    self.player.set_location(new_x, new_y)
+                    self.game.turn_completed()
+                else:
+                    self.resolve_attack(self.env.entity_at(new_x, new_y))
             if command == 'attack':
                 self.game.get_target()
     
     def resolve_attack(self, monster):
         if monster is not None:
             monster.take_damage(34)
-        self.game.turn_completed()
+            self.game.turn_completed()
 
     def handle_movement(self, command):
         x, y = self.player.get_location()
@@ -46,5 +51,4 @@ class PlayerController:
             new_y += 1
             new_x += 1
 
-        if self.env.validate_move(new_x, new_y):
-            self.player.set_location(new_x, new_y)
+        return (new_x, new_y)
