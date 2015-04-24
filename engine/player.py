@@ -3,6 +3,7 @@ class Player:
         self.tile_code = tile_code
         self.x = x
         self.y = y
+        self.hp = 100
 
     def set_location(self, x, y):
         self.x = x
@@ -10,3 +11,11 @@ class Player:
 
     def get_location(self):
         return (self.x, self.y)
+
+    def take_damage(self, amount):
+        """
+        Deal damage to the monster.
+
+        :param int amount: Amount of damage dealt.
+        """
+        self.hp -= amount

@@ -103,3 +103,12 @@ class EnvironmentController:
         :rtype: tuple
         """
         return self.player.get_location()
+
+    def get_player(self):
+        """
+        Get reference to the current player.
+
+        :return: Player object
+        :rtype: engine.player.Player
+        """
+        return self.player

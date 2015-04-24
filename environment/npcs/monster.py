@@ -48,3 +48,12 @@ class Monster:
         :rtype: int
         """
         return self.hp
+
+    def get_damage_amount(self):
+        """
+        Get the amount of damage done by this monster's attack.
+
+        :return: Damage amount.
+        :rtype: int
+        """
+        return 5
