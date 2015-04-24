@@ -41,6 +41,7 @@ class Game:
         self.state = 'movement'
         mc = self.environment.add_monster()
         mc.add_behavior(ChasePlayer())
+        mc.add_behavior(RandomMove())
 
     def handle_keypress(self, event):
         if event.keychar.upper() == 'Q':
