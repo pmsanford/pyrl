@@ -7,6 +7,11 @@ class TdlInput:
         self.mouse_handlers = []
 
     def add_event_handler(self, callback, type_filter = None):
+        """
+        :param callable callback: Method to call when event is fired.
+        :param type_filter: The types of events you wish to receive.
+        :type type_filter: list or None
+        """
         if type_filter is None or 'key' in type_filter:
             self.key_handlers.append(callback)
 
