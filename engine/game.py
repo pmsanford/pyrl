@@ -11,6 +11,7 @@ from engine.playercontroller import PlayerController
 from environment.environmentcontroller import EnvironmentController
 from rendering.monsterrenderer import MonsterRenderer
 from environment.npcs.behaviors.randommove import RandomMove
+from environment.npcs.behaviors.chaseplayer import ChasePlayer
 
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
@@ -39,7 +40,7 @@ class Game:
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'
         mc = self.environment.add_monster()
-        mc.add_behavior(RandomMove())
+        mc.add_behavior(ChasePlayer())
 
     def handle_keypress(self, event):
         if event.keychar.upper() == 'Q':

@@ -14,6 +14,23 @@ class EnvironmentController:
         self.map = map_info
         self.monsters = []
         self.player = player
+    
+    def get_move_cost(self, to_x, to_y, from_x, from_y):
+        """
+        Get the move cost between a pair of adjacent points.
+
+        :param int to_x: Where to move to, x coord.
+        :param int to_y: Where to move to, y coord.
+        :param int from_x: Where to move from, x coord.
+        :param int from_y: Where to move from, y coord.
+
+        :return: Cost to move.
+        :rtype: int or None
+        """
+        if self.validate_move(to_x, to_y) or self.player.get_location() == (to_x, to_y):
+            return 1
+        else:
+            return None
 
     def validate_move(self, x, y):
         """
@@ -85,4 +102,4 @@ class EnvironmentController:
         :return: Player's position (x, y)
         :rtype: tuple
         """
-        return self.player.position
+        return self.player.get_location()

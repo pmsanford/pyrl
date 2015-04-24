@@ -56,6 +56,9 @@ class Map:
                 x += length
         return runs
 
+    def get_dimensions(self):
+        return (len(self.map_lines[0]), len(self.map_lines))
+
     def get_attrs(self, x, y):
         if self.map_lines[y][x] in ['#', '-']:
             return {'passable': False}
