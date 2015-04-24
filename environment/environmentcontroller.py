@@ -18,7 +18,7 @@ class EnvironmentController:
         return True
 
     def add_monster(self, monster = Monster(5, 5, 'kobold')):
-        mc = MonsterController(monster, self)
+        mc = MonsterController(monster)
         self.monsters.append(mc)
         return mc
 
