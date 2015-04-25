@@ -13,6 +13,7 @@ from rendering.monsterrenderer import MonsterRenderer
 from environment.npcs.behaviors.randommove import RandomMove
 from environment.npcs.behaviors.chaseplayer import ChasePlayer
 from environment.npcs.behaviors.attackplayer import AttackPlayer
+from rendering.statpanelrenderer import StatPanelRenderer
 
 class Game:
     def __init__(self, console = TdlRenderer(config.WIDTH, config.HEIGHT, 'Game'),
@@ -25,7 +26,8 @@ class Game:
                  input_processor = TdlInput(),
                  keybindings = Keybindings(config.get_game_data('keybindings.json')),
                  player_controller = None,
-                 environment = None):
+                 environment = None,
+                 stat_renderer = None):
         self.console = console
         self.cur_map = first_map
         self.map_tileset = map_tileset
@@ -41,6 +43,7 @@ class Game:
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'
         mc = self.environment.add_monster()
+        self.stat_renderer = stat_renderer if stat_renderer is not None else StatPanelRenderer(self.player)
         mc.add_behavior(AttackPlayer())
         mc.add_behavior(ChasePlayer())
         mc.add_behavior(RandomMove())
@@ -103,6 +106,7 @@ class Game:
         self.char_renderer.render_character(self.player)
         self.environment.render_monsters(
                 MonsterRenderer(self.console, self.char_tileset))
+        self.stat_renderer.render(self.console)
         self.console.post_render()
 
     def update_all(self):
