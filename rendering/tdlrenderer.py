@@ -22,6 +22,26 @@ class TdlRenderer:
 
     def set_color(self, x, y, fg = None, bg = None):
         self.console.drawChar(x, y, None, fgcolor = fg, bgcolor = bg)
+        
+    def get_window(self, width, height):
+        """
+        Get a window to draw into.
+
+        :param int width: Width of the window.
+        :param int height: Height of the window.
+
+        :return: Drawable window.
+        """
+        return self.tdl.Console(width, height)
+
+    def draw_window_at(self, x, y, win):
+        """
+        Draw a console window to the screen.
+
+        :param int x: X coordinate.
+        :param int y: Y coordinate.
+        """
+        self.console.blit(win, x, y)
 
     def show_prompt(self, text):
         new_win = self.tdl.Console(self.console.width, 4)
