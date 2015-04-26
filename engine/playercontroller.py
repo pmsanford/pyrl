@@ -7,7 +7,6 @@ class PlayerController:
         self.env = environment
 
     def handle_keypress(self, event):
-        print(self.player.hp)
         command = self.keybindings.get_binding(event.keychar)
         if command is not None:
             if command in self.movement_keys:
