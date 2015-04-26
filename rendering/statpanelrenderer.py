@@ -12,7 +12,7 @@ class StatPanelRenderer:
         :param window: The window to draw to.
         """
         hpstr = "HP: {0}".format(self.player.hp)
-        window.drawStr(2, 2, hpstr)
+        window.draw_str_at(2, 2, hpstr)
 
     def render(self):
         """
@@ -23,7 +23,7 @@ class StatPanelRenderer:
 
         win = self.console.get_window(12, height)
 
-        win.drawFrame(0, 0, 12, height, '-')
+        win.draw_frame('-')
 
         self.show_hp(win)
 

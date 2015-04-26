@@ -1,3 +1,5 @@
+from rendering.tdlrenderwindow import TdlRenderWindow
+
 class TdlRenderer:
     def __init__(self, width = 80, height = 24, title = 'TDL Console'):
         import tdl # Importhing this initializes a bunch of crap
@@ -32,7 +34,8 @@ class TdlRenderer:
 
         :return: Drawable window.
         """
-        return self.tdl.Console(width, height)
+        cons = self.tdl.Console(width, height)
+        return TdlRenderWindow(width, height, cons)
 
     def draw_window_at(self, x, y, win):
         """
@@ -41,7 +44,7 @@ class TdlRenderer:
         :param int x: X coordinate.
         :param int y: Y coordinate.
         """
-        self.console.blit(win, x, y)
+        self.console.blit(win.win, x, y)
 
     def show_prompt(self, text):
         new_win = self.tdl.Console(self.console.width, 4)
