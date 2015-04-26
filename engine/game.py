@@ -43,7 +43,7 @@ class Game:
         self.input_processor.add_event_handler(self.handle_keypress, ['key'])
         self.state = 'movement'
         mc = self.environment.add_monster()
-        self.stat_renderer = stat_renderer if stat_renderer is not None else StatPanelRenderer(self.player)
+        self.stat_renderer = stat_renderer if stat_renderer is not None else StatPanelRenderer(self.player, self.console)
         mc.add_behavior(AttackPlayer())
         mc.add_behavior(ChasePlayer())
         mc.add_behavior(RandomMove())
@@ -106,7 +106,7 @@ class Game:
         self.char_renderer.render_character(self.player)
         self.environment.render_monsters(
                 MonsterRenderer(self.console, self.char_tileset))
-        self.stat_renderer.render(self.console)
+        self.stat_renderer.render()
         self.console.post_render()
 
     def update_all(self):
