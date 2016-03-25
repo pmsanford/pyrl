@@ -8,8 +8,8 @@ class TdlRenderer:
         self.prompt = None
 
     def draw_str_at(self, x, y, string, 
-                    fgcolor = (255, 255, 255), bgcolor = (0, 0, 0)):
-        self.console.drawStr(x, y, string, fgcolor = fgcolor, bgcolor = bgcolor)
+                    fg = (255, 255, 255), bg = (0, 0, 0)):
+        self.console.drawStr(x, y, string, fg = fg, bg = bg)
 
     def pre_render(self):
         self.console.clear()
@@ -23,7 +23,7 @@ class TdlRenderer:
         return self.console.getSize()
 
     def set_color(self, x, y, fg = None, bg = None):
-        self.console.drawChar(x, y, None, fgcolor = fg, bgcolor = bg)
+        self.console.drawChar(x, y, None, fg = fg, bg = bg)
         
     def get_window(self, width, height):
         """
